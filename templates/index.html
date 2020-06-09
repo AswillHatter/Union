@@ -13,9 +13,24 @@
 </form>
 </div>
 <div>
+    <p>
+
+    </p>
     <form method="get" action="runFN" >
         <button name="RunFNBt" type="submit">Run</button>
     </form>
+    <p>
+        <h2>Вывод коэфициентов схожести</h2>
+        <p>{% for key in data %}
+            <div><b>{{ key }}:</b>&nbsp; {{ data[key] }}</div>
+            {% endfor %}
+        </p>
+    </p>
+</div>
+<div>
+    <p>
+
+    </p>
 </div>
 </body>
 </html>
