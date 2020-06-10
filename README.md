@@ -1,6 +1,7 @@
-# facenet-face-recognition
+#На основе facenet-face-recognition
 
-This repository contains a demonstration of face recognition using the FaceNet network (https://arxiv.org/pdf/1503.03832.pdf) and a webcam. Our implementation feeds frames from the webcam to the network to determine whether or not the frame contains an individual we recognize.
+
+(из facenet-face-recognition readme) This repository contains a demonstration of face recognition using the FaceNet network (https://arxiv.org/pdf/1503.03832.pdf) and a webcam. Our implementation feeds frames from the webcam to the network to determine whether or not the frame contains an individual we recognize.
 
 ## How to use
 
@@ -8,10 +9,9 @@ To install all the requirements for the project run
 
 	pip install -r requirements.txt
 
-In the root directory. After the modules have been installed you can run the project by using python
+Это Flask-приложение, так что, чтобы запустить его из консоли, наберите 
 
-	python facenet.py
+	export FLASK_APP=start.py
+	python -m flask run
 
-## NOTE
-
-We are using the Windows 10 Text-to-Speech library to output our audio message, so if you want to run it on a different OS then you will have to replace the speech library used in facenet.py
+Либо настройте соответствующие параметры запуска в среде разработки (например pycharm)

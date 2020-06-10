@@ -87,9 +87,10 @@ def webcam_face_recognizer(database):
         _, frame = cap.read()
         img = frame
         key = cv2.waitKey(100)
+        cv2.namedWindow("preview", cv2.WINDOW_NORMAL)
         cv2.imshow("preview", img)
 
-        if key == 27:
+        if key == 32:
             # Делаем снимок
             ret, frame = cap.read()
 
@@ -128,12 +129,10 @@ def process_frame(img, frame, face_cascade):
             identities.append(identity)
 
     if identities != []:
-        cv2.imwrite('example.png', img)
+        cv2.imwrite(r"C:\Users\oboro\PycharmProjects\Union\proc_img\example.png", img)
 
         ready_to_detect_identity = False
         pool = Pool(processes=1)
-        # We run this as a separate process so that the camera feedback does not freeze
-        #pool.apply_async(welcome_users, [identities])
     print('process_frame')
     return img
 
@@ -191,26 +190,6 @@ def who_is_it(image, database, model):
     else:
         return str(identity)
 
-"""
-def welcome_users(identities):
-
-    global ready_to_detect_identity
-    welcome_message = 'Welcome '
-
-    if len(identities) == 1:
-        welcome_message += '%s, have a nice day.' % identities[0]
-    else:
-        for identity_id in range(len(identities) - 1):
-            welcome_message += '%s, ' % identities[identity_id]
-        welcome_message += 'and %s, ' % identities[-1]
-        welcome_message += 'have a nice day!'
-    print('welcome_users')
-    print(welcome_message)
-
-    # Allow the program to start detecting identities again
-    ready_to_detect_identity = True
-    """
-
 database = prepare_database()
 
 
@@ -229,11 +208,6 @@ def procWeb():
 
 
 
-"""if __name__ == "__main__":
-    print('main')
-    database = prepare_database()
-    webcam_face_recognizer(database)
-"""
 # ### References:
 #
 # - Florian Schroff, Dmitry Kalenichenko, James Philbin (2015). [FaceNet: A Unified Embedding for Face Recognition and Clustering](https://arxiv.org/pdf/1503.03832.pdf)
