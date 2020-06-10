@@ -1,5 +1,6 @@
 import os
 import cv2
+import glob
 from flask import Flask, render_template, redirect, url_for, request, send_from_directory
 from werkzeug.utils import secure_filename
 
@@ -49,14 +50,14 @@ def run_proc():
     if (os.path.exists(r"C:\Users\oboro\PycharmProjects\Union\proc_img\file.png")):
         print("true")
         import facenet_et as fn
+        print("import")
         #fn.FRmodel.compile(optimizer='adam', loss=fn.triplet_loss, metrics=['accuracy'])
         #fn.load_weights_from_FaceNet(fn.FRmodel)
-        database = fn.prepare_database()
 
-        img = None
-        frame = cv2.imread(r"C:\Users\oboro\PycharmProjects\Union\proc_img\file.png")
-        face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
-        img = fn.process_frame(img, frame, face_cascade)
+        #database = fn.prepare_database()
+
+        fn.procFile()
+
         print("end of if")
         mas = fn.mas_of_dist
         mas_k = mas.keys()
@@ -64,9 +65,10 @@ def run_proc():
     else:
         print("false")
         import facenet_et as fn
-        fn.FRmodel.compile(optimizer='adam', loss=fn.triplet_loss, metrics=['accuracy'])
-        fn.load_weights_from_FaceNet(fn.FRmodel)
-        database = fn.prepare_database()
+        print("import")
+        #fn.FRmodel.compile(optimizer='adam', loss=fn.triplet_loss, metrics=['accuracy'])
+        #fn.load_weights_from_FaceNet(fn.FRmodel)
+        #database = fn.prepare_database()
 
         fn.procWeb()
         print("end of else")
@@ -75,6 +77,9 @@ def run_proc():
         print(mas)
         #fn.do_code()
 
+    files = glob.glob(r"C:\Users\oboro\PycharmProjects\Union\proc_img\*")
+    for f in files:
+        os.remove(f)
     return render_template('index.html', data = mas)
 
 

@@ -179,7 +179,7 @@ def who_is_it(image, database, model):
         # Compute L2 distance between the target "encoding" and the current "emb" from the database.
         dist = np.linalg.norm(db_enc - encoding)
         mas_of_dist[name] = dist
-        print('distance for %s is %s' % (name, dist))
+        #print('distance for %s is %s' % (name, dist))
 
         # If this distance is less than the min_dist, then set min_dist to dist, and identity to name
         if dist < min_dist:
@@ -214,10 +214,13 @@ def welcome_users(identities):
 database = prepare_database()
 
 
-img = cv2.imread(r"C:\Users\oboro\PycharmProjects\Union\proc_img\file.png")
-frame = img
-face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
-process_frame(img, frame, face_cascade)
+
+def procFile():
+    img = None
+    frame = cv2.imread(r"C:\Users\oboro\PycharmProjects\Union\proc_img\file.png")
+    face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
+    img = process_frame(img, frame, face_cascade)
+
 
 #print(database)
 def procWeb():
