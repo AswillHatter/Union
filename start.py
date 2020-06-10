@@ -53,7 +53,6 @@ def run_proc():
         print("import")
         #fn.FRmodel.compile(optimizer='adam', loss=fn.triplet_loss, metrics=['accuracy'])
         #fn.load_weights_from_FaceNet(fn.FRmodel)
-
         #database = fn.prepare_database()
 
         fn.procFile()
