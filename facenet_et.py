@@ -194,9 +194,9 @@ database = prepare_database()
 
 
 
-def procFile():
+def procFile(s):
     img = None
-    frame = cv2.imread(r"C:\Users\oboro\PycharmProjects\Union\proc_img\file.png")
+    frame = cv2.imread(s)
     face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
     img = process_frame(img, frame, face_cascade)
 

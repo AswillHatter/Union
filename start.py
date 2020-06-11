@@ -21,6 +21,9 @@ def uploaded_file(filename):
 
 @app.route('/', methods=['GET'])
 def hello_world():
+    files = glob.glob(r"C:\Users\oboro\PycharmProjects\Union\proc_img\*")
+    for f in files:
+        os.remove(f)
     return render_template('index.html')
 
 
@@ -44,13 +47,13 @@ def get_img():
 @app.route('/runFN', methods=['GET'])
 def run_proc():
     print("run_proc")
-
-    if (os.path.exists(r"C:\Users\oboro\PycharmProjects\Union\proc_img\file.png")):
+    s = do_path()
+    if (os.path.exists(s)):
         print("true")
         import facenet_et as fn
         print("import")
 
-        fn.procFile()
+        fn.procFile(s)
         print("end of if")
 
     else:
@@ -60,21 +63,34 @@ def run_proc():
 
         fn.procWeb()
         print("end of else")
-
     mas = fn.mas_of_dist
-    mas_k = mas.keys()
-
     print(mas)
-    print("*")
     maspl, masmi = choose(mas)
-    print("**")
     factor_mas = create_factor_mas(maspl, masmi)
     print("\n", factor_mas)
+    output_mas = form_output_mas(factor_mas)
+    print("\n", output_mas)
+    final_output = format_final_output(output_mas)
+    return render_template('index.html', data = final_output)
 
-    files = glob.glob(r"C:\Users\oboro\PycharmProjects\Union\proc_img\*")
-    for f in files:
-        os.remove(f)
-    return render_template('index.html', data = mas)
+
+def format_final_output(output_mas):
+    final_output = []
+    for k in output_mas:
+        final_output = final_output + k.split("\n")
+    return final_output
+
+def do_path():
+    s = None
+    if os.path.exists(r"C:\Users\oboro\PycharmProjects\Union\proc_img\file.png"):
+        s = r"C:\Users\oboro\PycharmProjects\Union\proc_img\file.png"
+    if os.path.exists(r"C:\Users\oboro\PycharmProjects\Union\proc_img\file.jpg"):
+        s = r"C:\Users\oboro\PycharmProjects\Union\proc_img\file.jpg"
+    if os.path.exists(r"C:\Users\oboro\PycharmProjects\Union\proc_img\file.jpeg"):
+        s = r"C:\Users\oboro\PycharmProjects\Union\proc_img\file.jpeg"
+    if os.path.exists(r"C:\Users\oboro\PycharmProjects\Union\proc_img\file.gif"):
+        s = r"C:\Users\oboro\PycharmProjects\Union\proc_img\file.gif"
+    return s
 
 
 def f_max(tmp):
@@ -97,6 +113,21 @@ def f_min(tmp):
     return min_k
 
 
+def plus_or_minus(a):
+    i_pl = 0
+    i_mi = 0
+    for i in a:
+        if i == '+':
+            i_pl = i_pl+1
+        else:
+            i_mi = i_mi+1
+    if i_pl>i_mi:
+        return '+'
+    else:
+        return '-'
+
+
+
 def choose(mas):
     maspl = []
     masmi = []
@@ -107,11 +138,8 @@ def choose(mas):
         l_k = []
         for k in range(i * 8, i * 8 + 8):
             l_k.append(l_keys[k])
-
         for key in l_k:
             tmp[key] = mas[key]
-
-
         p = f_max(tmp)
         maspl.append(p.split("_")[1])
         tmp.pop(p)
@@ -125,24 +153,39 @@ def choose(mas):
         masmi.append(p.split("_")[1])
         tmp.pop(p)
         i = i + 1
-
     print("maspl = ")
     print(maspl)
     print("masmi = ")
     print(masmi)
-
     return maspl, masmi
 
 
 def create_factor_mas(maspl, masmi):
     factor_mas = {'h': [], 's': [], 'e': [], 'hy': [], 'k': [],
                   'p': [], 'd': [], 'm': []}
+    factor_mas2 = {'h': None, 's': None, 'e': None, 'hy': None, 'k': None,
+                  'p': None, 'd': None, 'm': None}
     for i in maspl:
         factor_mas[i].append('+')
-
     for i in masmi:
         factor_mas[i].append('-')
-    return factor_mas
+    for key in factor_mas:
+        if len(factor_mas[key])<2:
+            factor_mas2[key] = 0
+        elif len(factor_mas[key]) == 2 and factor_mas[key][0] != factor_mas[key][1]:
+            factor_mas2[key] = 0
+        else:
+            factor_mas2[key] = plus_or_minus(factor_mas[key])
+    return factor_mas2
+
+
+def form_output_mas(factor_mas):
+    output_mas = []
+    import Mas_data as M
+    for key in factor_mas:
+        if factor_mas[key] != 0:
+            output_mas.append(M.et_mas[key] + M.et1_mas[key][factor_mas[key]])
+    return output_mas
 
 
 if __name__ == "__main__":

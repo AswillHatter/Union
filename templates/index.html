@@ -5,31 +5,27 @@
     <title>Main page</title>
 </head>
 <body>
-<h2>Загрузите фото</h2>
+<p>Загрузите фото или сразу нажмите кнопку "Запуск", чтобы воспользоваться камерой</p>
+<h2></h2>
 <div>
 <form method="post" action="" enctype=multipart/form-data>
     <input type=file name="file">
-    <button type="submit">Download</button>
+    <button type="submit">Загрузить</button>
 </form>
 </div>
 <div>
-    <p>
-
-    </p>
+<h2> </h2>
     <form method="get" action="runFN" >
-        <button name="RunFNBt" type="submit">Run</button>
+        <button name="RunFNBt" type="submit">Запуск</button>
     </form>
     <p>
-        <h2>Вывод коэфициентов схожести</h2>
+        <h2>Результаты</h2>
+        <div>
         <p>{% for key in data %}
-            <div><b>{{ key }}:</b>&nbsp; {{ data[key] }}</div>
+            <p>{{ key }}</p>&nbsp;
             {% endfor %}
         </p>
-    </p>
-</div>
-<div>
-    <p>
-
+        </div>
     </p>
 </div>
 </body>
