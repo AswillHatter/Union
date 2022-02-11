@@ -22,7 +22,7 @@ mkl-random==1.1.1
 mkl-service==2.3.0
 numpy==1.18.1
 opencv-python==4.2.0.34
-protobuf==3.11.4
+protobuf==3.15.0
 pyparsing==2.4.7
 pypiwin32==223
 pyreadline==2.1
